@@ -45,8 +45,6 @@ extension/   the Chrome extension — not deployed
 | `site/demo.js` | wires the live demo — the popup script minus `chrome.storage` |
 | `site/_headers` | security headers for Cloudflare |
 | `extension/` | the Chrome extension, self-contained |
-| `extension-preview.html` | the popup in a normal browser tab — open it directly, no build, no install |
-| `STORE-LISTING.md` | Web Store submission text |
 
 `wrangler.jsonc` points Cloudflare's asset root at `site/`, so only the website
 is uploaded — the extension source stays out of the deployed site.
