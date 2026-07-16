@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Password</title>
+  <meta name="description" content="Generate strong passwords locally.">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <button class="wordmark" id="wordmark" type="button">Password</button>
+    <span class="topbar-tag">generator</span>
+  </header>
+
+  <main class="stage">
+    <div class="out">
+      <output id="pw" class="pw" aria-live="polite" aria-atomic="true">&nbsp;</output>
+    </div>
+
+    <div class="row">
+      <label class="lbl" for="lenNum">Length</label>
+      <input class="len-num" id="lenNum" type="number" min="6" max="64" value="16" aria-label="Password length">
+    </div>
+    <input class="range" id="len" type="range" min="6" max="64" value="16" aria-label="Password length slider">
+
+    <div class="segs" role="group" aria-label="Character sets">
+      <button type="button" id="tUpper" aria-pressed="true">A-Z</button>
+      <button type="button" id="tLower" aria-pressed="true">a-z</button>
+      <button type="button" id="tNum" aria-pressed="true">0-9</button>
+      <button type="button" id="tSym" aria-pressed="true">!@#</button>
+    </div>
+
+    <div class="opts">
+      <button class="opt" type="button" id="tAmb" aria-pressed="false">
+        <span class="tick" aria-hidden="true"></span>Exclude I l 1 O 0
+      </button>
+      <span class="ent" id="ent">~100 bits</span>
+    </div>
+
+    <div class="actions">
+      <button class="btn-ghost" id="regen" type="button">New</button>
+      <button class="btn-primary" id="copy" type="button">Copy</button>
+    </div>
+
+    <p class="hint"><kbd>Space</kbd> new · <kbd>C</kbd> copy</p>
+  </main>
+
+  <footer class="footer">
+    <span>Made with ♥ by Alex Ghit</span>
+    <span class="dot">·</span>
+    <a href="https://passwords.hey5.studio" target="_blank" rel="noopener">Privacy</a>
+    <span class="dot">·</span>
+    <span>v1.0</span>
+  </footer>
+
+  <script src="generator.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

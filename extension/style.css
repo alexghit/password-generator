@@ -1,0 +1,179 @@
+/* password generator — tool-specific only */
+
+body{
+  width:340px;
+  display:flex;
+  flex-direction:column;
+  /* fonts are remote in the web tools; extensions block those, so fall back */
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+.topbar{padding:18px 20px 14px}
+/* base.css stacks the footer under 600px (a mobile rule for the site).
+   The popup is always 340px, so force it back to a single row. */
+.footer{
+  padding:16px 20px 18px;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  gap:6px;
+  line-height:1;
+  font-size:10px;
+  letter-spacing:.02em;
+  white-space:nowrap;
+}
+.footer .dot{display:inline}
+
+.stage{
+  flex:1;
+  padding:0 20px 4px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+
+.out{
+  width:100%;
+  background:var(--field-bg);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px 14px;
+}
+.pw{
+  display:block;
+  font-family:var(--mono);
+  font-size:14px;
+  line-height:1.6;
+  letter-spacing:.02em;
+  word-break:break-all;
+  text-align:center;
+  color:var(--ink);
+}
+
+.row{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:-8px;
+}
+.lbl,.len-num{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.lbl{color:var(--faint)}
+
+.len-num{
+  width:44px;
+  text-align:right;
+  color:var(--muted);
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:6px;
+  padding:3px 5px;
+  transition:border-color var(--t),color var(--t);
+}
+.len-num:hover{border-color:var(--line)}
+.len-num:focus{
+  outline:none;
+  color:var(--ink);
+  border-color:var(--line-strong);
+  background:var(--field-bg);
+}
+/* hide spinners — the slider is the stepper */
+.len-num::-webkit-inner-spin-button,
+.len-num::-webkit-outer-spin-button{appearance:none;margin:0}
+.len-num{-moz-appearance:textfield}
+
+.range{
+  width:100%;
+  height:4px;
+  appearance:none;
+  background:var(--surface-2);
+  border-radius:999px;
+  cursor:pointer;
+}
+.range::-webkit-slider-thumb{
+  appearance:none;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:rgba(255,255,255,.94);
+  transition:transform 140ms var(--ease);
+}
+.range:active::-webkit-slider-thumb{transform:scale(1.2)}
+.range:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+
+.segs{width:100%;justify-content:space-between}
+.segs button{flex:1;padding:8px 0}
+
+.actions{display:flex;gap:8px;width:100%}
+.actions button{flex:1}
+
+.opts{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:-4px;
+}
+
+.opt{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  cursor:pointer;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.04em;
+  color:var(--muted);
+  background:none;
+  border:none;
+  padding:0;
+  white-space:nowrap;
+  transition:color var(--t);
+}
+.opt:hover{color:rgba(255,255,255,.85)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+.tick{
+  flex:none;
+  width:13px;
+  height:13px;
+  border:1px solid var(--line-strong);
+  border-radius:4px;
+  transition:background var(--t),border-color var(--t);
+}
+.opt[aria-pressed="true"] .tick{
+  background:rgba(255,255,255,.92);
+  border-color:rgba(255,255,255,.92);
+}
+.opt[aria-pressed="true"] .tick::after{
+  content:"";
+  display:block;
+  width:3px;
+  height:6px;
+  margin:1px auto 0;
+  border:solid var(--bg);
+  border-width:0 1.5px 1.5px 0;
+  transform:rotate(45deg);
+}
+.opt[aria-pressed="true"]{color:var(--ink)}
+
+.ent{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.04em;
+  color:var(--faint);
+  white-space:nowrap;
+  transition:color var(--t);
+}
+/* mono system — weight via brightness, not hue */
+.ent[data-level="weak"]{color:rgba(255,255,255,.34)}
+.ent[data-level="fair"]{color:var(--faint)}
+.ent[data-level="strong"]{color:var(--muted)}
+.ent[data-level="very"]{color:rgba(255,255,255,.72)}
