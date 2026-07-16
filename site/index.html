@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Password Generator</title>
+  <meta name="description" content="A Chrome extension that generates strong passwords. Nothing leaves your machine.">
+
+  <meta property="og:title" content="Password Generator — Chrome extension">
+  <meta property="og:description" content="A Chrome extension that generates strong passwords. Nothing leaves your machine.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0c0c0e">
+  <link rel="canonical" href="https://passwords.hey5.studio/">
+  <meta property="og:url" content="https://passwords.hey5.studio/">
+  <meta property="og:image" content="https://passwords.hey5.studio/icon128.png">
+
+  <link rel="icon" type="image/png" sizes="48x48" href="icon48.png">
+  <link rel="apple-touch-icon" href="icon128.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <header class="topbar">
+      <button class="wordmark" id="wordmark" type="button">Password Generator</button>
+      <span class="topbar-tag">chrome extension</span>
+    </header>
+
+    <main class="stage">
+
+      <section class="hero">
+        <h1 class="display">A better password,<br>in one click.</h1>
+        <p class="lede">Generate strong passwords locally. No account, no tracking, and no password history.</p>
+      </section>
+
+      <section class="demo" aria-label="Live demo">
+        <div class="popup">
+          <div class="popup-bar">
+            <span>Password</span>
+            <span class="popup-tag">generator</span>
+          </div>
+
+          <div class="popup-body">
+            <div class="out">
+              <output id="pw" class="pw" aria-live="polite" aria-atomic="true">&nbsp;</output>
+            </div>
+
+            <div class="row">
+              <label class="lbl" for="lenNum">Length</label>
+              <input class="len-num" id="lenNum" type="number" min="6" max="64" value="16" aria-label="Password length">
+            </div>
+            <input class="range" id="len" type="range" min="6" max="64" value="16" aria-label="Password length slider">
+
+            <div class="segs" role="group" aria-label="Character sets">
+              <button type="button" id="tUpper" aria-pressed="true">A-Z</button>
+              <button type="button" id="tLower" aria-pressed="true">a-z</button>
+              <button type="button" id="tNum" aria-pressed="true">0-9</button>
+              <button type="button" id="tSym" aria-pressed="true">!@#</button>
+            </div>
+
+            <div class="opts">
+              <button class="opt" type="button" id="tAmb" aria-pressed="false">
+                <span class="tick" aria-hidden="true"></span>Exclude I l 1 O 0
+              </button>
+              <span class="ent" id="ent"></span>
+            </div>
+
+            <div class="actions">
+              <button class="btn-ghost" id="regen" type="button">New</button>
+              <button class="btn-primary" id="copy" type="button">Copy</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="install" id="install">
+        <a class="btn-primary install-btn" href="https://chromewebstore.google.com/detail/password-generator/ooiofcecgpidfaeigfannfcdgocjnehm" id="install-link" target="_blank" rel="noopener">Add to Chrome</a>
+        <p class="hint">Free · Works offline · Your password stays with you</p>
+      </section>
+
+      <section class="trust" aria-label="Why use Password">
+        <div class="note">
+          <h2>Private by default</h2>
+          <p>Your passwords are made in your browser and are never sent anywhere.</p>
+        </div>
+        <div class="note">
+          <h2>Built for control</h2>
+          <p>Choose the length and character sets, then copy a fresh password when you need one.</p>
+        </div>
+      </section>
+
+      <section class="privacy" id="privacy">
+        <h2>Privacy</h2>
+        <p>Password makes no network requests and collects no data. It only saves your generator preferences locally in Chrome—not your passwords.</p>
+        <p class="privacy-contact">Questions: <a href="mailto:alex@hey5.studio">alex@hey5.studio</a></p>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <span>Made with ♥ by Alex Ghit</span>
+      <span class="dot">·</span>
+      <span>v1.0</span>
+    </footer>
+
+  </div>
+
+  <script src="generator.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>
