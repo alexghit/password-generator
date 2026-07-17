@@ -1,63 +1,41 @@
 # Password Generator
 
-A Chrome extension that generates strong passwords locally, and its website.
+Generate strong passwords locally. Nothing leaves your machine.
 
-**[passwords.hey5.studio](https://passwords.hey5.studio)**
+Live at [passwords.hey5.studio](https://passwords.hey5.studio).
 
-## About
+## What it does
 
-Passwords come from `crypto.getRandomValues()`, the browser's cryptographic
-random number generator, seeded by the operating system. Never `Math.random()`,
-which is predictable.
+Pick a length and which character sets to draw from, and get a password built with `crypto.getRandomValues` — the browser's cryptographic RNG, not `Math.random`. The entropy readout tells you how much randomness you're actually getting, so you can see what a shorter password or a smaller character set costs you.
 
-Characters are picked with rejection sampling, discarding values that would
-skew the distribution — without it, a naive `byte % 26` makes early letters
-about 20% more likely than late ones. Order is shuffled with Fisher-Yates,
-drawing fresh randomness for each swap.
+Nothing is stored, sent, or logged. There's no history, no account, and no network request — the page works with the connection off.
 
-One character from every enabled set is guaranteed, since sites reject
-passwords missing a digit or symbol. Filtering happens before that guarantee,
-so excluding ambiguous characters can't force one back in.
+- **Length 6–64** — slider or type an exact number
+- **A-Z · a-z · 0-9 · !@#** — toggle each set
+- **Exclude look-alikes** — drops `I l 1 O 0` for passwords you'll read off a screen
+- **Entropy readout** — updates live as you change the options
 
-Entropy is shown in bits — `length × log₂(pool size)` — rather than a strength
-bar drawn from nothing in particular. Sixteen characters from a 75-character
-pool is about 100 bits.
+### Shortcuts
 
-## Privacy
-
-The extension requests one permission: `storage`, for length and toggle state.
-Never passwords. No host permissions, so it cannot read the pages you visit.
-No network requests, no analytics, no history, no account.
-
-## Layout
-
-```
-site/        the deployed website
-extension/   the Chrome extension — not deployed
-```
-
-| | |
+| Key | Action |
 |---|---|
-| `site/index.html` | the page |
-| `site/style.css` | site styles |
-| `site/base.css` | design tokens — colours, type, and shared components |
-| `site/generator.js` | the generator, identical to the extension's copy |
-| `site/demo.js` | wires the live demo — the popup script minus `chrome.storage` |
-| `site/_headers` | security headers for Cloudflare |
-| `extension/` | the Chrome extension, self-contained |
+| `Space` | New password |
+| `C` | Copy |
 
-`wrangler.jsonc` points Cloudflare's asset root at `site/`, so only the website
-is uploaded — the extension source stays out of the deployed site.
+## How it's built
 
-`generator.js` and `base.css` are duplicated between `site/` and `extension/` on
-purpose — the extension package has to be self-contained, since Chrome can't
-load files from outside it. Change one, copy to the other.
+Vanilla HTML/CSS/JS, no framework or build step. The site and the extension are each one self-contained file with CSS, JS and the favicon inlined.
 
-`extension-preview.html` inlines the popup's CSS and JS and stubs out
-`chrome.storage`, so the popup renders at its real 340px width without loading
-the unpacked extension. It's for eyeballing changes only — regenerate it after
-editing the popup, and don't ship it in the store package.
+```
+site/        the landing page — index.html, plus robots.txt and
+             sitemap.xml, which crawlers fetch by URL
+extension/   the unpacked Chrome extension — popup.html and its icons
+```
+
+The generator itself is short enough that both copies carry it inline rather than sharing a file — a Chrome extension can't load code from outside its own folder, so it was already duplicated. If you change how passwords are made, change it in both.
+
+`wrangler.jsonc` points Cloudflare's asset root at `site/` and falls back to `index.html` for any unmatched path, so a wrong URL lands on the app rather than a 404.
 
 ## Credits
 
-Made with ♥ by Alex Ghit — alex@hey5.studio
+Made with ♥ by Alex Ghit — <alex@hey5.studio>
