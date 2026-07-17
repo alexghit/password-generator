@@ -24,15 +24,22 @@ Nothing is stored, sent, or logged. There's no history, no account, and no netwo
 
 ## How it's built
 
-Vanilla HTML/CSS/JS, no framework or build step. The site and the extension are each one self-contained file with CSS, JS and the favicon inlined.
+Vanilla HTML/CSS/JS, no framework or build step.
 
 ```
-site/        the landing page — index.html, plus robots.txt and
-             sitemap.xml, which crawlers fetch by URL
-extension/   the unpacked Chrome extension — popup.html and its icons
+site/        the landing page — one self-contained index.html, plus
+             robots.txt and sitemap.xml, which crawlers fetch by URL
+extension/   the unpacked Chrome extension
 ```
 
-The generator itself is short enough that both copies carry it inline rather than sharing a file — a Chrome extension can't load code from outside its own folder, so it was already duplicated. If you change how passwords are made, change it in both.
+The site inlines everything into `index.html`. The extension can't — MV3's
+content security policy blocks inline scripts, so `generator.js` and `popup.js`
+stay as files there.
+
+`generator.js` exists in the extension only; the site carries its own copy
+inline. A Chrome extension can't load code from outside its own folder, so the
+two were always separate. If you change how passwords are made, change it in
+both.
 
 `wrangler.jsonc` points Cloudflare's asset root at `site/` and falls back to `index.html` for any unmatched path, so a wrong URL lands on the app rather than a 404.
 
